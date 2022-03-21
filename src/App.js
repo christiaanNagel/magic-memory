@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import './App.css'
 import SingleCard from './Components/SingleCard';
 
@@ -26,6 +26,8 @@ function App() {
     .sort(()=> Math.random()-0.5)
     .map((card) => ({...card, id: Math.random()}))
 
+    setChoiceOne(null)
+    setChoiceTwo(null)
     setCards(shuffleCards)
     setTurns(0)
   }
@@ -69,6 +71,9 @@ console.log(cards);
     setDisabled(false)
   }
 
+   useEffect(()=>{
+     shuffleCards()
+   },[])
 
   return (
     <div className="App">
@@ -79,6 +84,7 @@ console.log(cards);
             <SingleCard key={card.id} card={card} handleChoice={handleChoice} flipped={card === choiceOne || card === choiceTwo || card.matched} disabled={disabled}/>
         ))}
       </div>
+      <p>Turns: {turns}</p>
     </div>
   );
 }
